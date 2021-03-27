@@ -189,11 +189,24 @@ def ensure_user_environment(user_requirements_txt_file):
         conda_version = '4.5.8'
     # If no prior miniconda installation is found, we can install a newer version
     else:
+<<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
         conda_version = '4.10.3'
+=======
+        logger.info('Downloading & setting up user environment...HIHIHIHI')
+        # FIXME: allow using miniforge
+        # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
+        logger.info("getting miniforge")
+        installer_url = "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
+        #installer_url = "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh"
+        with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
+            conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+        logger.info("finished installing")
+        conda_version = '4.8.1'
+>>>>>>> 2a943a9... trying to allow miniforge instaed of miniconda. installing from my fork
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.

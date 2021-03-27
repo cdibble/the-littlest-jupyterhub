@@ -357,6 +357,13 @@ def main():
         logger.info('Upgrading TLJH installer...')
     run_subprocess(tljh_install_cmd)
 
+    pip_flags = ['--upgrade']
+    if os.environ.get('TLJH_BOOTSTRAP_DEV', 'no') == 'yes':
+        pip_flags.append('--editable')
+    tljh_repo_path = os.environ.get(
+        'TLJH_BOOTSTRAP_PIP_SPEC',
+        'git+https://github.com/cdibble/the-littlest-jupyterhub.git'
+    )
 
     # Run TLJH installer
     logger.info('Running TLJH installer...')
