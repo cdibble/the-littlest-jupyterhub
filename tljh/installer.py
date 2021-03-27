@@ -191,6 +191,7 @@ def ensure_user_environment(user_requirements_txt_file):
     else:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
@@ -201,6 +202,9 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
         logger.info('Downloading & setting up user environment...')
 >>>>>>> 3c4218b... added miniforge functions for download, install, and version check. should support whatever architecture and system
+=======
+        logger.info('Downloading & setting up user environment...HIHIHI')
+>>>>>>> c99f46c... logging to make sure i am pulling from my fork
         # FIXME: allow using miniforge
         # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
         # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
