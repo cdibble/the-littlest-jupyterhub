@@ -39,6 +39,19 @@ def check_miniconda_version(prefix, version):
         # Conda doesn't exist
         return False
 
+def check_miniforge_version(prefix, version):
+    """
+    Return true if a miniforge install with version exists at prefix
+    """
+    try:
+        installed_version = subprocess.check_output([
+            os.path.join(prefix, 'condabin', 'conda'),
+            '-V'
+        ], stderr=subprocess.STDOUT).decode().strip().split()[1]
+        return V(installed_version) >= V(version)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        # Conda doesn't exist
+        return False
 
 @contextlib.contextmanager
 def download_miniconda_installer(installer_url, sha256sum):
@@ -56,11 +69,28 @@ def download_miniconda_installer(installer_url, sha256sum):
         f.flush()
         os.fsync(f.fileno())
 
+        if sha256_file(f.name) != sha256sum:
+           raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
+
+        yield f.name
+
+@contextlib.contextmanager
+def download_miniforge_installer(installer_url, sha256sum):
+    """
+    Context manager to download miniforge installer from a given URL
+
+    This should be used as a contextmanager. It downloads miniforge installer
+    of given version, verifies the sha256sum & provides path to it to the `with`
+    block to run.
+    """
+    with tempfile.NamedTemporaryFile() as f:
+        with open(f.name, 'wb') as f:
+            f.write(requests.get(installer_url).content)
+
         #if sha256_file(f.name) != sha256sum:
          #   raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
 
         yield f.name
-
 
 def fix_permissions(prefix):
     """Fix permissions in the install prefix
@@ -92,6 +122,20 @@ def install_miniconda(installer_path, prefix):
     # when the installer is run as root
     fix_permissions(prefix)
 
+def install_miniforge(installer_path, prefix):
+    """
+    Install miniconda with installer at installer_path under prefix
+    """ ["bash", "Miniforge3.sh", "-b"]
+    utils.run_subprocess([
+        '/bin/bash',
+        installer_path,
+        '-u', '-b',
+        '-p', prefix
+    ])
+    # fix permissions on initial install
+    # a few files have the wrong ownership and permissions initially
+    # when the installer is run as root
+    fix_permissions(prefix)
 
 def ensure_conda_packages(prefix, packages):
     """

@@ -190,6 +190,7 @@ def ensure_user_environment(user_requirements_txt_file):
     # If no prior miniconda installation is found, we can install a newer version
     else:
 <<<<<<< HEAD
+<<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
@@ -197,19 +198,17 @@ def ensure_user_environment(user_requirements_txt_file):
         conda_version = '4.10.3'
 =======
         logger.info('Downloading & setting up user environment...HIHIHIHI')
+=======
+        logger.info('Downloading & setting up user environment...')
+>>>>>>> 3c4218b... added miniforge functions for download, install, and version check. should support whatever architecture and system
         # FIXME: allow using miniforge
         # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
-        logger.info("getting miniforge")
-        #installer_url = "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
-        utils.run_subprocess(
-                ["wget", "-O", "Miniforge3.sh", "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"]
-        )
-        utils.run_subprocess(
-                ["bash", "Miniforge3.sh", "-b"]
-        )
-        #installer_url = "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh"
-        #with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
+        # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
         #    conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+        logger.info("getting miniforge")
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname()[0]}-{os.uname()[-1]}.sh"
+        with conda.download_miniforge_installer(installer_url) as installer_path:
+            conda.install_miniforge(installer_path, USER_ENV_PREFIX)
         logger.info("finished installing")
         conda_version = '4.8.1'
 >>>>>>> 2a943a9... trying to allow miniforge instaed of miniconda. installing from my fork
