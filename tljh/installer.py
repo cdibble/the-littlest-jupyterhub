@@ -179,11 +179,15 @@ def ensure_user_environment(user_requirements_txt_file):
         conda_version = '4.5.8'
     # If no prior miniconda installation is found, we can install a newer version
     else:
-        logger.info('Downloading & setting up user environment...')
+        logger.info('Downloading & setting up user environment...HIHIHIHI')
         # FIXME: allow using miniforge
-        installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
+        # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
+        logger.info("getting miniforge")
+        installer_url = "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
+        #installer_url = "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh"
         with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+        logger.info("finished installing")
         conda_version = '4.8.1'
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
