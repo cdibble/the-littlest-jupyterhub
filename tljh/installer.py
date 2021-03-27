@@ -173,10 +173,13 @@ def ensure_user_environment(user_requirements_txt_file):
     miniconda_new_version = '4.7.10'
     miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
 
-    if conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_new_version):
-        conda_version = '4.8.1'
-    elif conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_old_version):
-        conda_version = '4.5.8'
+    miniforge_new_version = '4.8.0'
+    miniforge_old_version = '4.7.0'
+    
+    if conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_new_version):
+        conda_version = '4.9.2'
+    elif conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_old_version):
+        conda_version = '4.7.0'
     # If no prior miniconda installation is found, we can install a newer version
     else:
         logger.info('Downloading & setting up user environment...HIHIHI')
@@ -189,7 +192,7 @@ def ensure_user_environment(user_requirements_txt_file):
         with conda.download_miniforge_installer(installer_url) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
         logger.info("finished installing")
-        conda_version = '4.8.1'
+        conda_version = '4.9.1'
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
