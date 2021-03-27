@@ -185,10 +185,10 @@ def ensure_user_environment(user_requirements_txt_file):
         logger.info("getting miniforge")
         #installer_url = "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh"
         utils.run_subprocess(
-		["wget", "-O", "Miniforge3.sh", "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"]
+                ["wget", "-O", "Miniforge3.sh", "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-$(uname)-$(uname -m).sh"]
 	)
 	utils.run_subprocess(
-		["bash", "Miniforge3.sh", "-b"]
+                ["bash", "Miniforge3.sh", "-b"]
 	)
         #installer_url = "http://repo.continuum.io/miniconda/Miniconda3-latest-Linux-armv7l.sh"
         #with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
