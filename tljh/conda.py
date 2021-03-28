@@ -125,7 +125,7 @@ def install_miniconda(installer_path, prefix):
 def install_miniforge(installer_path, prefix):
     """
     Install miniconda with installer at installer_path under prefix
-    """ ["bash", "Miniforge3.sh", "-b"]
+    """
     utils.run_subprocess([
         '/bin/bash',
         installer_path,
