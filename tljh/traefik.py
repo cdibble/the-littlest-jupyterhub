@@ -15,12 +15,13 @@ from tljh.configurer import load_config, _merge_dictionaries
 # FIXME: support more than one platform here
 # plat = "linux-amd64"
 # traefik_version = "1.7.18"
-plat = "linux-arm64"
+plat = "linux_arm64"
 traefik_version = "2.4.8"
 
 # record sha256 hashes for supported platforms here
 checksums = {
-    "linux-amd64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e"
+    "linux-amd64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
+    "linux_arm64": "0b48915a96e9d805882e2c4c6624e7d96bb11dfe2f38d5c730dab672923bf140"
 }
 
 def checksum_file(path):
