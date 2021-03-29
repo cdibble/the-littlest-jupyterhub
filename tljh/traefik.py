@@ -15,10 +15,10 @@ from tljh.configurer import load_config, _merge_dictionaries
 # FIXME: support more than one platform here
 # plat = "linux-amd64"
 # traefik_version = "1.7.18"
-# plat = "linux_arm64"
-# traefik_version = "2.4.8"
-plat = "linux_armv7"
+plat = "linux_arm64"
 traefik_version = "2.4.8"
+# plat = "linux_armv7"
+# traefik_version = "2.4.8"
 
 # record sha256 hashes for supported platforms here
 checksums = {
@@ -63,8 +63,11 @@ def ensure_traefik_binary(prefix):
     #     "https://github.com/containous/traefik/releases"
     #     f"/download/v{traefik_version}/traefik_{plat}"
     # )
+    # traefik_url = (
+    #     f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}.tar.gz"
+    # )
     traefik_url = (
-        f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}.tar.gz"
+        f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}"
     )
     print(f"Downloading traefik {traefik_version}...")
     # download the file
