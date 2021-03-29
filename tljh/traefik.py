@@ -15,14 +15,17 @@ from tljh.configurer import load_config, _merge_dictionaries
 # FIXME: support more than one platform here
 # plat = "linux-amd64"
 # traefik_version = "1.7.18"
-plat = "linux_arm64"
-traefik_version = "2.4.8"
+plat = "linux-arm64"
+traefik_version = "1.7.28"
+# plat = "linux_arm64"
+# traefik_version = "2.4.8"
 # plat = "linux_armv7"
 # traefik_version = "2.4.8"
 
 # record sha256 hashes for supported platforms here
 checksums = {
     "linux-amd64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
+    "linux-arm64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
     "linux_arm64": "0931fdd9c855fcafd38eba7568a1d287200fad5afd1aef7d112fb3a48d822fcc",
     "linux_armv7": "a9863430a3dfe1aa8c25fb0a37911a887834f4e1f7f69f85c66226c7573408d2"
 }
@@ -59,16 +62,14 @@ def ensure_traefik_binary(prefix):
             print(f"checksum mismatch on {traefik_bin}")
             os.remove(traefik_bin)
 
-    # traefik_url = (
-    #     "https://github.com/containous/traefik/releases"
-    #     f"/download/v{traefik_version}/traefik_{plat}"
-    # )
+    traefik_url = (
+        "https://github.com/containous/traefik/releases"
+        f"/download/v{traefik_version}/traefik_{plat}"
+    )
     # traefik_url = (
     #     f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}.tar.gz"
     # )
-    traefik_url = (
-        f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}"
-    )
+
     print(f"Downloading traefik {traefik_version}...")
     # download the file
     response = requests.get(traefik_url)
