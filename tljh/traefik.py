@@ -25,7 +25,7 @@ traefik_version = "1.7.28"
 # record sha256 hashes for supported platforms here
 checksums = {
     "linux-amd64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
-    "linux-arm64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
+    "linux-arm64": "a7db9b62b754878db02de5cfbf5f30a1c43e6e336c18ecafd4e9ceb426ccbe2a",
     "linux_arm64": "0931fdd9c855fcafd38eba7568a1d287200fad5afd1aef7d112fb3a48d822fcc",
     "linux_armv7": "a9863430a3dfe1aa8c25fb0a37911a887834f4e1f7f69f85c66226c7573408d2"
 }
