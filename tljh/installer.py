@@ -174,6 +174,7 @@ def ensure_user_environment(user_requirements_txt_file):
     miniconda_new_version = '4.7.10'
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     # Install mambaforge using an installer from
     # https://github.com/conda-forge/miniforge/releases
     mambaforge_new_version = '4.10.3-7'
@@ -192,6 +193,8 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
 =======
 >>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
+=======
+>>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
     miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
 
     miniforge_new_version = '4.8.0'
@@ -206,15 +209,19 @@ def ensure_user_environment(user_requirements_txt_file):
     elif conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_old_version):
         conda_version = '4.7.0'
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
 =======
 >>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
+=======
+>>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
     # If no prior miniconda installation is found, we can install a newer version
     else:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -242,11 +249,15 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
         miniforge_version = '4.10.0-0'
 >>>>>>> b310bea... fixed url for miniforge installer
+=======
+        miniforge_version = '4.10.0-0'
+>>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
         logger.info("Getting miniforge")
         # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.info("finished installing")
@@ -267,6 +278,10 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
         conda_version = '4.10.0'
 >>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
+=======
+        logger.info("Finished installing miniforge")
+        conda_version = '4.10.0'
+>>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
