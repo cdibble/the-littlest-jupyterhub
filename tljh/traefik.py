@@ -13,21 +13,22 @@ from .config import CONFIG_DIR
 from tljh.configurer import load_config, _merge_dictionaries
 
 # FIXME: support more than one platform here
+# traefik 2.7.x is not supported. Use v1.7.x
 # plat = "linux-amd64"
 # traefik_version = "1.7.18"
-plat = "linux-arm64"
-traefik_version = "1.7.28"
-# plat = "linux_arm64"
-# traefik_version = "2.4.8"
-# plat = "linux_armv7"
-# traefik_version = "2.4.8"
+machine = os.uname().machine
+if machine == 'aarch64':
+    plat = "linux-arm64"
+elif machine == 'x86_64':
+    plat = "linux-amd64"
+else:
+    raise OSError(f"Error. Platform: {os.uname().sysname} / {machine} Not supported.")
+traefik_version = "1.7.29"
 
 # record sha256 hashes for supported platforms here
 checksums = {
-    "linux-amd64": "3c2d153d80890b6fc8875af9f8ced32c4d684e1eb5a46d9815337cb343dfd92e",
-    "linux-arm64": "a7db9b62b754878db02de5cfbf5f30a1c43e6e336c18ecafd4e9ceb426ccbe2a",
-    "linux_arm64": "0931fdd9c855fcafd38eba7568a1d287200fad5afd1aef7d112fb3a48d822fcc",
-    "linux_armv7": "a9863430a3dfe1aa8c25fb0a37911a887834f4e1f7f69f85c66226c7573408d2"
+    "linux-amd64": "70cd8847354326fb17acd10251c44450cf5d6c4fd8df130f2c6f86dd7b1b52d1",
+    "linux-arm64": "d27c220bdcc8bae33436adce309fd856c2ee295bd3dd5416428d3b4a173b8310"
 }
 
 def checksum_file(path):
@@ -66,9 +67,6 @@ def ensure_traefik_binary(prefix):
         "https://github.com/containous/traefik/releases"
         f"/download/v{traefik_version}/traefik_{plat}"
     )
-    # traefik_url = (
-    #     f"https://github.com/traefik/traefik/releases/download/v{traefik_version}/traefik_v{traefik_version}_{plat}.tar.gz"
-    # )
 
     print(f"Downloading traefik {traefik_version}...")
     # download the file
