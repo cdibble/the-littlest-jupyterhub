@@ -85,7 +85,8 @@ def download_miniforge_installer(installer_url, sha256sum):
             f.write(requests.get(installer_url).content)
 
         if sha256_file(f.name) != sha256sum:
-           raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
+            print(f"file checksum {sha256_file(f.name)}")
+            raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
 
         yield f.name
 
