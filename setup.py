@@ -18,7 +18,12 @@ setup(
         'backoff',
         'requests',
         'bcrypt',
+<<<<<<< HEAD
         'jupyterhub-traefik-proxy==0.3.*',
+=======
+        'jupyterhub-traefik-proxy@git+https://github.com/yuvipanda/traefik-proxy.git@optional-deps'
+        # 'jupyterhub-traefik-proxy==0.2.*'
+>>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
     ],
     entry_points={
         'console_scripts': [

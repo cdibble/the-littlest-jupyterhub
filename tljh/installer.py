@@ -173,6 +173,7 @@ def ensure_user_environment(user_requirements_txt_file):
     miniconda_old_version = '4.5.4'
     miniconda_new_version = '4.7.10'
 <<<<<<< HEAD
+<<<<<<< HEAD
     # Install mambaforge using an installer from
     # https://github.com/conda-forge/miniforge/releases
     mambaforge_new_version = '4.10.3-7'
@@ -189,6 +190,8 @@ def ensure_user_environment(user_requirements_txt_file):
     elif conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_old_version):
         conda_version = '4.5.8'
 =======
+=======
+>>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
     miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
 
     miniforge_new_version = '4.8.0'
@@ -202,13 +205,17 @@ def ensure_user_environment(user_requirements_txt_file):
         conda_version = '4.9.2'
     elif conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_old_version):
         conda_version = '4.7.0'
+<<<<<<< HEAD
 >>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
+=======
+>>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
     # If no prior miniconda installation is found, we can install a newer version
     else:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
+<<<<<<< HEAD
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
@@ -221,6 +228,8 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
         logger.info('Downloading & setting up user environment...HIHIHI')
 >>>>>>> c99f46c... logging to make sure i am pulling from my fork
+=======
+>>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
         # FIXME: allow using miniforge
         # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
         # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
@@ -229,6 +238,7 @@ def ensure_user_environment(user_requirements_txt_file):
         installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
+<<<<<<< HEAD
 <<<<<<< HEAD
         logger.info("finished installing")
 <<<<<<< HEAD
@@ -240,6 +250,10 @@ def ensure_user_environment(user_requirements_txt_file):
 >>>>>>> 4773bac... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for cond
         conda_version = '4.9.1'
 >>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
+=======
+        logger.info("Finished installing miniforge")
+        conda_version = '4.9.1'
+>>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
