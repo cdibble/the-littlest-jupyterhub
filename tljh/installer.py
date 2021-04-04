@@ -199,8 +199,7 @@ def ensure_user_environment(user_requirements_txt_file):
     if os.uname().machine == 'aarch64':
         miniforge_installer_sha256 = '57dd34c670cd499099464b094d26461f43365c2c6211f3bc0a87015f39dbb992'
     elif os.uname().machine == 'x86_64':
-        # miniforge_installer_sha256 = '9c81d4dd830991374d8041f6b835920cf7ad355ea3ae80c236cd74237d5315a1'
-        miniforge_installer_sha256 = '0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5'
+        miniforge_installer_sha256 = '9c81d4dd830991374d8041f6b835920cf7ad355ea3ae80c236cd74237d5315a1'
     
     if conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_new_version):
         conda_version = '4.9.2'
