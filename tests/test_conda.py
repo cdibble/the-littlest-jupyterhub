@@ -8,22 +8,37 @@ import subprocess
 import tempfile
 
 
+# @pytest.fixture(scope='module')
+# def prefix():
+#     """
+#     Provide a temporary directory with a conda environment
+#     """
+#     miniconda_version = '4.7.10'
+#     miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
+#     installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_version)
+#     with tempfile.TemporaryDirectory() as tmpdir:
+#         with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
+#             conda.install_miniconda(installer_path, tmpdir)
+#         conda.ensure_conda_packages(tmpdir, [
+#             'conda==4.8.1'
+#         ])
+#         yield tmpdir
+
 @pytest.fixture(scope='module')
 def prefix():
     """
-    Provide a temporary directory with a conda environment
+    Provide a temporary directory with a miniforge conda environment
     """
-    miniconda_version = '4.7.10'
-    miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
-    installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_version)
+    miniforge_version = '4.10.0'
+    miniforge_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
+    installer_url = f"https://github.com/conda-forge/miniforge/releases/tag/{miniforge_version}/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
     with tempfile.TemporaryDirectory() as tmpdir:
-        with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
-            conda.install_miniconda(installer_path, tmpdir)
+        with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
+            conda.install_miniforge(installer_path, tmpdir)
         conda.ensure_conda_packages(tmpdir, [
-            'conda==4.8.1'
+            'conda==4.10.0'
         ])
         yield tmpdir
-
 
 def test_ensure_packages(prefix):
     """

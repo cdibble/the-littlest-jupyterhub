@@ -187,16 +187,14 @@ def ensure_user_environment(user_requirements_txt_file):
     # If no prior miniconda installation is found, we can install a newer version
     else:
         logger.info('Downloading & setting up user environment...')
-        # FIXME: allow using miniforge
-        # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
-        # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
-        #    conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+        miniforge_version = '4.10.0'
         logger.info("Getting miniforge")
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/tag/{miniforge_version}/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
         logger.info("Finished installing miniforge")
-        conda_version = '4.9.1'
+        conda_version = '4.10.0'
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
