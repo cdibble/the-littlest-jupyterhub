@@ -75,7 +75,7 @@ def download_miniconda_installer(installer_url, sha256sum):
         yield f.name
 
 @contextlib.contextmanager
-def download_miniforge_installer(installer_url):
+def download_miniforge_installer(installer_url, sha256sum):
     """
     Context manager to download miniforge installer from a given URL
 
@@ -87,8 +87,8 @@ def download_miniforge_installer(installer_url):
         with open(f.name, 'wb') as f:
             f.write(requests.get(installer_url).content)
 
-        #if sha256_file(f.name) != sha256sum:
-         #   raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
+        if sha256_file(f.name) != sha256sum:
+           raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
 
         yield f.name
 
@@ -167,35 +167,6 @@ def ensure_conda_packages(prefix, packages):
         return
     fix_permissions(prefix)
 
-def ensure_conda_packages_miniforge(prefix, packages):
-    """
-    Ensure packages (from conda-forge) are installed in the conda prefix.
-    """
-    conda_executable = [os.path.join(prefix, 'bin', 'python'), '-m', 'conda']
-    abspath = os.path.abspath(prefix)
-    # Let subprocess errors propagate
-    # Explicitly do *not* capture stderr, since that's not always JSON!
-    # Scripting conda is a PITA!
-    # FIXME: raise different exception when using
-    raw_output = subprocess.check_output(conda_executable + [
-        'install',
-        '-c', 'conda-forge',  # Make customizable if we ever need to
-        '--json',
-        '--prefix', abspath
-    ] + packages).decode()
-    # `conda install` outputs JSON lines for fetch updates,
-    # and a undelimited output at the end. There is no reasonable way to
-    # parse this outside of this kludge.
-    filtered_output = '\n'.join([
-        l for l in raw_output.split('\n')
-        # Sometimes the JSON messages start with a \x00. The lstrip removes these.
-        # conda messages seem to randomly throw \x00 in places for no reason
-        if not l.lstrip('\x00').startswith('{"fetch"')
-    ])
-    output = json.loads(filtered_output.lstrip('\x00'))
-    if 'success' in output and output['success'] == True:
-        return
-    fix_permissions(prefix)
 
 def ensure_pip_packages(prefix, packages):
     """
