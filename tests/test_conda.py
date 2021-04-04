@@ -29,9 +29,15 @@ def prefix():
     """
     Provide a temporary directory with a miniforge conda environment
     """
+<<<<<<< HEAD
     mambaforge_version = '4.10.3-7'
     installer_sha256 = "fc872522ec427fcab10167a93e802efaf251024b58cc27b084b915a9a73c4474"
     installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_version)
+=======
+    miniforge_version = '4.10.0-0'
+    miniforge_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
+    installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+>>>>>>> b310bea... fixed url for miniforge installer
     with tempfile.TemporaryDirectory() as tmpdir:
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, tmpdir)

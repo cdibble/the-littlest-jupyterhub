@@ -218,6 +218,7 @@ def ensure_user_environment(user_requirements_txt_file):
         logger.info('Downloading & setting up user environment...')
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
@@ -239,9 +240,12 @@ def ensure_user_environment(user_requirements_txt_file):
 =======
         miniforge_version = '4.10.0'
 >>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
+=======
+        miniforge_version = '4.10.0-0'
+>>>>>>> b310bea... fixed url for miniforge installer
         logger.info("Getting miniforge")
         # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/tag/{miniforge_version}/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
 <<<<<<< HEAD
