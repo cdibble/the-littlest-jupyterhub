@@ -172,13 +172,17 @@ def ensure_user_environment(user_requirements_txt_file):
 
     miniconda_old_version = '4.5.4'
     miniconda_new_version = '4.7.10'
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     # Install mambaforge using an installer from
     # https://github.com/conda-forge/miniforge/releases
     mambaforge_new_version = '4.10.3-7'
-    installer_sha256 = "fc872522ec427fcab10167a93e802efaf251024b58cc27b084b915a9a73c4474"
+    # Check system architecture, set appropriate installer checksum
+    if os.uname().machine == 'aarch64':
+        installer_sha256 = "ac95f137b287b3408e4f67f07a284357b1119ee157373b788b34e770ef2392b2"
+    elif os.uname().machine == 'x86_64':
+        installer_sha256 = "fc872522ec427fcab10167a93e802efaf251024b58cc27b084b915a9a73c4474"
+    # Check OS, set appropriate string for conda installer path
+    if os.uname().sysname != 'Linux':
+        raise OSError("TLJH is only supported on Linux platforms.")
     # Then run `mamba --version` to get the conda and mamba versions
     # Keep these in sync with tests/test_conda.py::prefix
     mambaforge_conda_new_version = '4.10.3'
@@ -190,98 +194,15 @@ def ensure_user_environment(user_requirements_txt_file):
         conda_version = '4.8.1'
     elif conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_old_version):
         conda_version = '4.5.8'
-=======
-=======
->>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
-=======
->>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
-    miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
-
-    miniforge_new_version = '4.8.0'
-    miniforge_old_version = '4.7.0'
-    if os.uname().machine == 'aarch64':
-        miniforge_installer_sha256 = '57dd34c670cd499099464b094d26461f43365c2c6211f3bc0a87015f39dbb992'
-    elif os.uname().machine == 'x86_64':
-        miniforge_installer_sha256 = '9c81d4dd830991374d8041f6b835920cf7ad355ea3ae80c236cd74237d5315a1'
-    
-    if conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_new_version):
-        conda_version = '4.9.2'
-    elif conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_old_version):
-        conda_version = '4.7.0'
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
-=======
->>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
-=======
->>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
     # If no prior miniconda installation is found, we can install a newer version
     else:
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
+        installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-{arch}.sh".format(v=mambaforge_new_version, arch=os.uname().machine)
+        logging.info(f"{installer_url}")
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
+            logging.info(installer_path)
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
         conda_version = '4.10.3'
-=======
-        logger.info('Downloading & setting up user environment...HIHIHIHI')
-=======
-        logger.info('Downloading & setting up user environment...')
->>>>>>> 3c4218b... added miniforge functions for download, install, and version check. should support whatever architecture and system
-=======
-        logger.info('Downloading & setting up user environment...HIHIHI')
->>>>>>> c99f46c... logging to make sure i am pulling from my fork
-=======
->>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
-        # FIXME: allow using miniforge
-        # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
-        # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
-        #    conda.install_miniconda(installer_path, USER_ENV_PREFIX)
-=======
-        miniforge_version = '4.10.0'
->>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
-=======
-        miniforge_version = '4.10.0-0'
->>>>>>> b310bea... fixed url for miniforge installer
-=======
-        miniforge_version = '4.10.0-0'
->>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
-        logger.info("Getting miniforge")
-        # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
-            conda.install_miniforge(installer_path, USER_ENV_PREFIX)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        logger.info("finished installing")
-<<<<<<< HEAD
-        conda_version = '4.8.1'
->>>>>>> 2a943a9... trying to allow miniforge instaed of miniconda. installing from my fork
-=======
-=======
-        logger.info("Finished installing miniforge")
->>>>>>> 4773bac... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for cond
-        conda_version = '4.9.1'
->>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
-=======
-        logger.info("Finished installing miniforge")
-<<<<<<< HEAD
-        conda_version = '4.9.1'
->>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
-=======
-        conda_version = '4.10.0'
->>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
-=======
-        logger.info("Finished installing miniforge")
-        conda_version = '4.10.0'
->>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
@@ -337,7 +258,7 @@ def ensure_admins(admin_password_list):
         yaml.dump(config, f)
 
 
-def ensure_jupyterhub_running(times=20):
+def ensure_jupyterhub_running(times=50):
     """
     Ensure that JupyterHub is up and running
 

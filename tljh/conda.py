@@ -92,28 +92,6 @@ def download_miniforge_installer(installer_url, sha256sum):
 
         yield f.name
 
-<<<<<<< HEAD
-=======
-@contextlib.contextmanager
-def download_miniforge_installer(installer_url, sha256sum):
-    """
-    Context manager to download miniforge installer from a given URL
-
-    This should be used as a contextmanager. It downloads miniforge installer
-    of given version, verifies the sha256sum & provides path to it to the `with`
-    block to run.
-    """
-    with tempfile.NamedTemporaryFile() as f:
-        with open(f.name, 'wb') as f:
-            f.write(requests.get(installer_url).content)
-
-        if sha256_file(f.name) != sha256sum:
-            print(f"file checksum {sha256_file(f.name)}")
-            raise Exception('sha256sum hash mismatch! Downloaded file corrupted')
-
-        yield f.name
-
->>>>>>> ad13287... updated tljh/conda.py, tljh/installer.py, tljh/traefik.py, tests/test_conda.py, and docs to add support for ARM as well as AMD64 architectures
 def fix_permissions(prefix):
     """Fix permissions in the install prefix
 
