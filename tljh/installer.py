@@ -188,10 +188,10 @@ def ensure_user_environment(user_requirements_txt_file):
     # If no prior miniconda installation is found, we can install a newer version
     else:
         logger.info('Downloading & setting up user environment...')
-        miniforge_version = '4.10.0'
+        miniforge_version = '4.10.0-0'
         logger.info("Getting miniforge")
         # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/tag/{miniforge_version}/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
         logger.info("Finished installing miniforge")
