@@ -216,6 +216,7 @@ def ensure_user_environment(user_requirements_txt_file):
 <<<<<<< HEAD
         logger.info('Downloading & setting up user environment...')
 <<<<<<< HEAD
+<<<<<<< HEAD
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
@@ -234,8 +235,12 @@ def ensure_user_environment(user_requirements_txt_file):
         # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
         # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
         #    conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+=======
+        miniforge_version = '4.10.0'
+>>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
         logger.info("Getting miniforge")
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/tag/{miniforge_version}/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
         with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
 <<<<<<< HEAD
@@ -252,8 +257,12 @@ def ensure_user_environment(user_requirements_txt_file):
 >>>>>>> bd1f019... fixed the version check routine- now referencing check_forge functions
 =======
         logger.info("Finished installing miniforge")
+<<<<<<< HEAD
         conda_version = '4.9.1'
 >>>>>>> 9317bc1... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for conda dependencies. Successfully installs TLJH on Ubuntu20.04 with ARM64 or AMD64 architecture.
+=======
+        conda_version = '4.10.0'
+>>>>>>> 34ab86f... updated so that installer string is pegged to miniforge 4.10.0 to avoid issues with downloading the latest release all the time
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
