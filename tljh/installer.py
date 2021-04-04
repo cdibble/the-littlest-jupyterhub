@@ -175,6 +175,10 @@ def ensure_user_environment(user_requirements_txt_file):
 
     miniforge_new_version = '4.8.0'
     miniforge_old_version = '4.7.0'
+    if os.uname().machine == 'aarch64':
+        miniforge_installer_sha256 = '57dd34c670cd499099464b094d26461f43365c2c6211f3bc0a87015f39dbb992'
+    elif os.uname().machine == 'x86_64':
+        miniforge_installer_sha256 = '9c81d4dd830991374d8041f6b835920cf7ad355ea3ae80c236cd74237d5315a1'
     
     if conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_new_version):
         conda_version = '4.9.2'
@@ -187,11 +191,11 @@ def ensure_user_environment(user_requirements_txt_file):
         # installer_url = "https://repo.continuum.io/miniconda/Miniconda3-{}-Linux-x86_64.sh".format(miniconda_new_version)
         # with conda.download_miniconda_installer(installer_url, miniconda_installer_sha256) as installer_path:
         #    conda.install_miniconda(installer_path, USER_ENV_PREFIX)
-        logger.info("getting miniforge")
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname()[0]}-{os.uname()[-1]}.sh"
-        with conda.download_miniforge_installer(installer_url) as installer_path:
+        logger.info("Getting miniforge")
+        installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
+        with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
             conda.install_miniforge(installer_path, USER_ENV_PREFIX)
-        logger.info("finished installing")
+        logger.info("Finished installing miniforge")
         conda_version = '4.9.1'
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
