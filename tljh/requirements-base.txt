@@ -2,14 +2,14 @@
 # pinning only direct dependencies is a recipe for broken environments!
 
 # JupyterHub + notebook package are base requirements for user environment
-jupyterhub==1.2.*
-notebook==6.1.5
+jupyterhub==1.4.0
+notebook==6.4.1
 # Install additional notebook frontends!
 jupyterlab==3.*
 nteract-on-jupyter==2.1.*
 # Install jupyterlab extensions from PyPI
 # nbgitpuller for easily pulling in Git repositories
-nbgitpuller==0.9.*
+nbgitpuller==1.*
 # jupyter-resource-usage to show people how much RAM they are using
 jupyter-resource-usage==0.5.*
 # Most people consider ipywidgets to be part of the core notebook experience

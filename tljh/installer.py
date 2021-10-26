@@ -131,16 +131,17 @@ def ensure_jupyterhub_package(prefix):
     conda.ensure_pip_packages(
         prefix,
         [
-            "jupyterhub==1.2.2",
+            "jupyterhub==1.4.0",
             "jupyterhub-dummyauthenticator==0.3.1",
             "jupyterhub-systemdspawner==0.15",
             "jupyterhub-firstuseauthenticator==0.14.1",
-            "jupyterhub-nativeauthenticator==0.0.5",
+            "jupyterhub-nativeauthenticator==0.0.7",
             "jupyterhub-ldapauthenticator==1.3.0",
             "jupyterhub-tmpauthenticator==0.6",
             "oauthenticator==0.10.0",
             "jupyterhub-idle-culler==1.0",
             "chardet==3.0.4",
+            "git+https://github.com/yuvipanda/jupyterhub-configurator@317759e17c8e48de1b1352b836dac2a230536dba"
         ],
     )
     traefik.ensure_traefik_binary(prefix)
@@ -171,34 +172,33 @@ def ensure_user_environment(user_requirements_txt_file):
 
     miniconda_old_version = '4.5.4'
     miniconda_new_version = '4.7.10'
-    miniconda_installer_sha256 = "8a324adcc9eaf1c09e22a992bb6234d91a94146840ee6b11c114ecadafc68121"
-
-    miniforge_new_version = '4.8.0'
-    miniforge_old_version = '4.7.0'
-    if os.uname().machine == 'aarch64':
-        miniforge_installer_sha256 = '57dd34c670cd499099464b094d26461f43365c2c6211f3bc0a87015f39dbb992'
-    elif os.uname().machine == 'x86_64':
-        miniforge_installer_sha256 = '9c81d4dd830991374d8041f6b835920cf7ad355ea3ae80c236cd74237d5315a1'
+    # Install mambaforge using an installer from
+    # https://github.com/conda-forge/miniforge/releases
+    mambaforge_new_version = '4.10.3-7'
+    installer_sha256 = "fc872522ec427fcab10167a93e802efaf251024b58cc27b084b915a9a73c4474"
+    # Then run `mamba --version` to get the conda and mamba versions
+    # Keep these in sync with tests/test_conda.py::prefix
+    mambaforge_conda_new_version = '4.10.3'
+    mambaforge_mamba_version = '0.16.0'
     
-    if conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_new_version):
-        conda_version = '4.9.2'
-    elif conda.check_miniforge_version(USER_ENV_PREFIX, miniforge_old_version):
-        conda_version = '4.7.0'
+    if conda.check_miniconda_version(USER_ENV_PREFIX, mambaforge_conda_new_version):
+        conda_version = '4.10.3'
+    elif conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_new_version):
+        conda_version = '4.8.1'
+    elif conda.check_miniconda_version(USER_ENV_PREFIX, miniconda_old_version):
+        conda_version = '4.5.8'
     # If no prior miniconda installation is found, we can install a newer version
     else:
         logger.info('Downloading & setting up user environment...')
-        miniforge_version = '4.10.0-0'
-        logger.info("Getting miniforge")
-        # installer_url = f"https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        installer_url = f"https://github.com/conda-forge/miniforge/releases/download/{miniforge_version}/Miniforge3-{os.uname().sysname}-{os.uname().machine}.sh"
-        with conda.download_miniforge_installer(installer_url, miniforge_installer_sha256) as installer_path:
-            conda.install_miniforge(installer_path, USER_ENV_PREFIX)
-        logger.info("Finished installing miniforge")
-        conda_version = '4.10.0'
+        installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-x86_64.sh".format(v=mambaforge_new_version)
+        with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
+            conda.install_miniconda(installer_path, USER_ENV_PREFIX)
+        conda_version = '4.10.3'
 
     conda.ensure_conda_packages(USER_ENV_PREFIX, [
         # Conda's latest version is on conda much more so than on PyPI.
-        'conda==' + conda_version
+        'conda==' + conda_version,
+        'mamba==' + mambaforge_mamba_version,
     ])
 
     conda.ensure_pip_requirements(
