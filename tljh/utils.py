@@ -51,5 +51,5 @@ def get_plugin_manager():
     pm = pluggy.PluginManager('tljh')
     pm.add_hookspecs(hooks)
     pm.load_setuptools_entrypoints('tljh')
-
+    
     return pm
