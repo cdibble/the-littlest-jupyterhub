@@ -4,7 +4,7 @@ setup(
     name='the-littlest-jupyterhub',
     version='0.1',
     description='A small JupyterHub distribution',
-    url='https://github.com/jupyterhub/the-littlest-jupyterhub',
+    url='https://github.com/cdibble/the-littlest-jupyterhub',
     author='Jupyter Development Team',
     author_email='jupyter@googlegroups.com',
     license='3 Clause BSD',
