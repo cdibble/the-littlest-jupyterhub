@@ -82,7 +82,7 @@ def install_miniconda(installer_path, prefix):
     Install miniconda with installer at installer_path under prefix
     """
     utils.run_subprocess([
-        '/bin/bash',
+        'sudo /bin/bash',
         installer_path,
         '-u', '-b',
         '-p', prefix
