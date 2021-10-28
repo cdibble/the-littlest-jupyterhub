@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This is a GitHub workflow defining a set of jobs with a set of steps.
 # ref: https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
 #
@@ -56,10 +57,22 @@ jobs:
           #   ubuntu_version: "21.10"
           #   python_version: "3.9"
 
+=======
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-18.04
+    container: ubuntu:18.04
+>>>>>>> 4773bac... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for cond
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
+<<<<<<< HEAD
           python-version: ${{ matrix.python_version }}
 
       - name: Install venv, git and setup venv
@@ -106,3 +119,28 @@ jobs:
 
       - name: Upload code coverage stats
         run: codecov
+=======
+          python-version: 3.6
+      - name: Install and setup venv
+        run: |
+          apt-get update --yes && apt-get install --yes python3-venv
+          python3 -m venv /srv/venv
+          echo '/srv/venv/bin' >> $GITHUB_PATH
+      - name: Cache pip deps
+        uses: actions/cache@v2
+        with:
+          path: /srv/venv/
+          key: ${{ runner.os }}-pip-dependencies-${{ hashFiles('*setup.py', '*dev-requirements.txt') }}
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install -U pip==20.0.*
+          python3 -m pip install -r dev-requirements.txt
+          python3 -m pip install -e .
+          pip freeze
+      - name: Run unit tests
+        run: |
+          pytest --cov=tljh tests/
+      - name: Upload code coverage stats
+        run: |
+          codecov
+>>>>>>> 4773bac... updated tljh/conda.py, tljh/installer.py, and tljh/traefik.py to automatically select arm64 or amd64 binaries for traefik and to use miniforge instead of miniconda for cond
