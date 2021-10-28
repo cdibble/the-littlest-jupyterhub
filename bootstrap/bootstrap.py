@@ -348,7 +348,7 @@ def main():
     tljh_install_cmd.append(
         os.environ.get(
             'TLJH_BOOTSTRAP_PIP_SPEC',
-            'git+ssh://git@github.com/cdibble/the-littlest-jupyterhub.git@mambaforge_arm'
+            'git+https://github.com/jupyterhub/the-littlest-jupyterhub.git'
         )
     )
     if initial_setup:
