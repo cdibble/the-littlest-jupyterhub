@@ -199,6 +199,7 @@ def ensure_user_environment(user_requirements_txt_file):
         logger.info('Downloading & setting up user environment...')
         installer_url = "https://github.com/conda-forge/miniforge/releases/download/{v}/Mambaforge-{v}-Linux-{arch}.sh".format(v=mambaforge_new_version, arch=os.uname().machine)
         with conda.download_miniconda_installer(installer_url, installer_sha256) as installer_path:
+            logging.info(installer_path)
             conda.install_miniconda(installer_path, USER_ENV_PREFIX)
         conda_version = '4.10.3'
 
@@ -256,7 +257,7 @@ def ensure_admins(admin_password_list):
         yaml.dump(config, f)
 
 
-def ensure_jupyterhub_running(times=20):
+def ensure_jupyterhub_running(times=50):
     """
     Ensure that JupyterHub is up and running
 
